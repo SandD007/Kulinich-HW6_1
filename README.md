@@ -1,0 +1,1 @@
+# Kulinich-HW6_1
