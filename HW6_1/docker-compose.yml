@@ -1,0 +1,33 @@
+version: '3.4'
+
+services:
+  hw6_1:
+    image: ${DOCKER_REGISTRY-}hw61
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+       - ASPNETCORE_ENVIRONMENT=Development
+       - ASPNETCORE_URLS=http://+:5000
+    ports:
+      - 5000:5000
+
+  nginx:
+    image: nginx
+    container_name: lde.nginx
+    ports:
+      - 80:80
+    volumes:
+      - ./Proxy/gateway/nginx/conf.d:/conf.d
+
+
+networks:
+  default:
+    driver: bridge
+    internal: false
+    attachable: true
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.0.4/24
+          gateway: 192.168.0.4
